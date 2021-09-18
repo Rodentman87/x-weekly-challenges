@@ -29,7 +29,7 @@ loop {
 sub animation(List \TrackArr, Int \ind, Int \jnd --> Str) {
   TrackArr.kv.map(-> \i, @line {
     @line.kv.map(-> \j, \item {
-      [i, j] eqv [ind, jnd] ?? "C" !! item
+      i == ind && j == jnd ?? "C" !! item
     })
   })>>.join.join("\n");
 }
