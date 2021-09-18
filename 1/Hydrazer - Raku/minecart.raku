@@ -1,4 +1,4 @@
-my List \TrackArr = "bruh.txt".IO.lines>>.comb;
+my List constant TrackArr = "bruh.txt".IO.lines>>.comb;
 
 my Array enum Dir (
   up => [-1, 0],
