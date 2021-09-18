@@ -7,7 +7,7 @@ my Array enum Dir (
   right => [0, 1]
 );
 
-my Array @time-arr;
+my Array @pos-arr;
 my Int ($ind, $jnd) = 0, 0;
 my Dir $curr-dir = Dir::right;
 
@@ -17,9 +17,9 @@ loop {
 
   ($ind, $jnd, $curr-dir) = TrackArr.&get-next-step($ind, $jnd, $curr-dir);
 
-  @time-arr.push(["[$jnd, $ind]"]);
+  @pos-arr.push(["[$jnd, $ind]"]);
 
-  say @time-arr.&time-stamps;
+  say @pos-arr.&time-stamps([10, 15 ... 30]);
 
   sleep .25;
   print qx[clear];
@@ -29,13 +29,13 @@ loop {
 sub animation(List \TrackArr, Int \ind, Int \jnd --> Str) {
   TrackArr.kv.map(-> \i, @line {
     @line.kv.map(-> \j, \item {
-      i == ind && j == jnd ?? "C" !! item
+      [i, j] eqv [ind, jnd] ?? "C" !! item
     })
   })>>.join.join("\n");
 }
 
-sub time-stamps(Array @time-arr --> Str) {
-  [10, 15 ... 30].grep(* < @time-arr).map(-> $time {"Time $time: @time-arr[$time]"}).join("\n")
+sub time-stamps(Array @pos-arr, Array \time-arr --> Str) {
+  time-arr.grep(* < @pos-arr).map(-> $time {"Time $time: @pos-arr[$time]"}).join("\n")
 }
 
 sub get-next-step(List \TrackArr, Int \ind, Int \jnd, Dir \curr-dir --> Array)  {
