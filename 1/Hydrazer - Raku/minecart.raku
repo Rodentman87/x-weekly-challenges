@@ -26,10 +26,10 @@ loop {
 }
 
 
-sub animation(List \TrackArr, Int $ind, Int $jnd --> Str) {
+sub animation(List \TrackArr, Int \ind, Int \jnd --> Str) {
   TrackArr.kv.map(-> \i, @line {
     @line.kv.map(-> \j, \item {
-      i == $ind && j == $jnd ?? "C" !! item
+      i == ind && j == jnd ?? "C" !! item
     })
   })>>.join.join("\n");
 }
@@ -38,16 +38,16 @@ sub time-stamps(Array @time-arr --> Str) {
   [10, 15 ... 30].grep(* < @time-arr).map(-> $time {"Time $time: @time-arr[$time]"}).join("\n")
 }
 
-sub get-next-step(List \TrackArr, Int \ind, Int \jnd, Dir $curr-dir --> Array)  {
-  my Str $curr-item = TrackArr[ind][jnd];
-  my Dir $newDir = get-next-direction($curr-dir, $curr-item);
-  my Int ($new-i, $new-j) = $newDir.Array Z+ ind, jnd;
+sub get-next-step(List \TrackArr, Int \ind, Int \jnd, Dir \curr-dir --> Array)  {
+  my Str \curr-item = TrackArr[ind][jnd];
+  my Dir \new-dir = get-next-direction(curr-dir, curr-item);
+  my Int (\new-i, \new-j) = new-dir.Array Z+ ind, jnd;
 
-  [$new-i, $new-j, $newDir]
+  [new-i, new-j, new-dir]
 }
 
-sub get-next-direction(Dir $direction, Str $item --> Dir) {
-  given $direction, $item {
+sub get-next-direction(Dir \direction, Str \item --> Dir) {
+  given direction, item {
     when (Dir::left, "╚") | (Dir::right, "╝") {
       Dir::up
     }
@@ -65,7 +65,7 @@ sub get-next-direction(Dir $direction, Str $item --> Dir) {
     }
 
     default {
-      $direction
+      direction
     }
   }
 }
